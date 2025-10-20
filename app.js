@@ -14,6 +14,8 @@ function exibirtextonatela() {
     exibirtextonatela('p', 'escolha um numero entre 1 e 10');
 }
 
+exibirtextonatela();
+
 function verificarchute(){
     let chute = documen.querySelector('input').value;
 
@@ -30,18 +32,35 @@ function verificarchute(){
             exibirtextonatela('p', 'o numero secreto e maior');
         }
         tentativas++;
-        
+        limparcampo();
     }
 }
 
-
-
-
-
-
 function gerarNumeroAleatorio(){
-    return perseint(Math.random() * 10 + 1);
+    let numeroescolhido = parseInt(Math.random() * numerolimite + 1);
+    let quantidadedeelementosbalista = listadenumerossorteados.length;
+
+    if (quantidadedeelementosbalista == numerolimite) {
+        listadenumerossorteados = [];
+    }
+    if (listadenumerossorteados.includes(numeroescolhido)) {
+        return gerarNumeroAleatorio();
+    } else {
+        listadenumerossorteados.push(numeroescolhido);
+        console.log(listadenumerossorteados)
+        return numeroescolhido;
+    }
 }
 
+function limparcampo() {
+    chute = document.querySelector('input');
+    chute.value = '';
+}
 
-
+function reiniciarjogo() {
+    numerosecreto = gerarNumeroAleatorio();
+    limparcampo();
+    tentativas = 1;
+    exibirtextonatela();
+    document.getElementById('reiniciar').setAttribute('disabled', true)
+}
